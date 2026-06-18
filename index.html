@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-10">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TCO & Energy Calculator</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -17,15 +17,17 @@
     <div id="root"></div>
 
     <script type="text/babel">
+        // ดึงฟังก์ชันของ React มาใช้แบบมาตรฐานเพื่อป้องกัน Error จาก Babel
+        const { useState, useEffect } = React;
+
         function App() {
-            // ตั้งค่าเริ่มต้นให้โหมดหัวลากเป็นค่าเริ่มต้นตามภาพ
-            const [mode, ReactSetMode] = React.useState('tractor');
+            // ตั้งค่าเริ่มต้นให้โหมดหัวลากเป็นค่าเริ่มต้น
+            const [mode, setMode] = useState('tractor');
 
             // =====================================================================
             // 📌 จุดที่ 1: แก้ไขค่าเริ่มต้น (Default Values) ได้ที่นี่!
-            // คุณสามารถเปลี่ยนตัวเลขด้านหลังเครื่องหมาย : ได้เลย (ห้ามลบลูกน้ำ , ด้านหลัง)
             // =====================================================================
-            const [inputs, setInputs] = React.useState({
+            const [inputs, setInputs] = useState({
                 // --- ค่าทั่วไป (ใช้ร่วมกันทุกโหมด) ---
                 workDaysPerYear: 300,        // จำนวนวันทำงานต่อปี
                 dieselPrice: 39.0,           // ราคาน้ำมันดีเซล (บาท/ลิตร)
@@ -33,14 +35,14 @@
                 
                 // --- 🚜 โหมดรถตัก (Loader) ---
                 loaderWorkHoursPerDay: 12,       // ชั่วโมงทำงานต่อวัน
-                loaderDieselConsumption: 9,     // อัตรากินน้ำมัน (ลิตร/ชม.)
-                loaderEvConsumption: 24.5,         // อัตรากินไฟ (kWh/ชม.)
+                loaderDieselConsumption: 9,      // อัตรากินน้ำมัน (ลิตร/ชม.)
+                loaderEvConsumption: 24.5,       // อัตรากินไฟ (kWh/ชม.)
                 loaderDieselMachinePrice: 3500000, // ราคารถตักดีเซล
                 loaderEvMachinePrice: 4500000,     // ราคารถตัก EV
-                loaderDieselMaintenance: 50000,   // ค่าซ่อมบำรุงรถตักดีเซล/ปี
+                loaderDieselMaintenance: 50000,    // ค่าซ่อมบำรุงรถตักดีเซล/ปี
                 loaderEvMaintenance: 20000,        // ค่าซ่อมบำรุงรถตัก EV/ปี
 
-                // --- 🚛 โหมดรถหัวลาก (Tractor) - ค่าตามภาพอ้างอิง ---
+                // --- 🚛 โหมดรถหัวลาก (Tractor) ---
                 tractorDistancePerDay: 400,      // ระยะวิ่งต่อวัน (กม.)
                 tractorDieselConsumption: 3.0,   // อัตรากินน้ำมัน (กม./ลิตร)
                 tractorEvConsumption: 1.3,       // อัตรากินไฟ (kWh/กม.)
@@ -52,15 +54,15 @@
                 // --- 🔄 โหมดรถโม่ปูน (Mixer) ---
                 mixerDistancePerDay: 100,        // ระยะวิ่งต่อวัน (กม.)
                 mixerDieselConsumption: 2.2,     // อัตรากินน้ำมัน (กม./ลิตร)
-                mixerEvConsumption: 1.50,         // อัตรากินไฟ (kWh/กม.)
-                mixerDieselMachinePrice: 3500000,  // ราคารถโม่ดีเซล (ตั้งให้ต่างกันเพื่อทดสอบ)
+                mixerEvConsumption: 1.50,        // อัตรากินไฟ (kWh/กม.)
+                mixerDieselMachinePrice: 3500000,  // ราคารถโม่ดีเซล
                 mixerEvMachinePrice: 3900000,      // ราคารถโม่ EV
                 mixerDieselMaintenance: 100000,    // ค่าซ่อมบำรุงโม่ดีเซล/ปี
                 mixerEvMaintenance: 50000,         // ค่าซ่อมบำรุงโม่ EV/ปี
             });
             // =====================================================================
 
-            const [results, setResults] = React.useState({
+            const [results, setResults] = useState({
                 yearlyWorkload: 0,
                 dieselCostPerDay: 0,
                 dieselCostPerYear: 0,
@@ -79,14 +81,15 @@
                 tcoSaving5Y: 0
             });
 
-            React.useEffect(() => {
+            // คำนวณผลลัพธ์อัตโนมัติเมื่อมีการเปลี่ยนค่า
+            useEffect(() => {
                 let dailyDieselCost = 0;
                 let dailyEvCost = 0;
                 let yearlyWorkload = 0;
                 let dailyDieselLiter = 0;
                 let dailyEvKwh = 0;
 
-                // ดึงราคารถและค่าซ่อมบำรุงตามโหมดที่เลือก (แยกจากกันแล้ว)
+                // ดึงราคารถและค่าซ่อมบำรุงตามโหมดที่เลือก
                 let activeDieselMachinePrice = inputs[`${mode}DieselMachinePrice`];
                 let activeEvMachinePrice = inputs[`${mode}EvMachinePrice`];
                 let activeDieselMaintenance = inputs[`${mode}DieselMaintenance`];
@@ -106,11 +109,10 @@
                     dailyEvKwh = inputs.mixerDistancePerDay * inputs.mixerEvConsumption;
                 }
 
-                // คำนวณรายจ่ายต่อวัน
+                // คำนวณรายจ่ายต่อวันและต่อปี
                 dailyDieselCost = dailyDieselLiter * inputs.dieselPrice;
                 dailyEvCost = dailyEvKwh * inputs.electricityPrice;
 
-                // คำนวณรายจ่ายต่อปี
                 const dieselCostPerYear = dailyDieselCost * inputs.workDaysPerYear;
                 const evCostPerYear = dailyEvCost * inputs.workDaysPerYear;
                 const yearlyDieselLiterTotal = dailyDieselLiter * inputs.workDaysPerYear;
@@ -126,7 +128,6 @@
                 const investmentDiff = activeEvMachinePrice - activeDieselMachinePrice;
                 let roiYears = 0;
                 
-                // การคำนวณ ROI รวมส่วนต่างราคารถ หารด้วย (พลังงานที่ประหยัดได้ + ค่าซ่อมบำรุงที่ประหยัดได้)
                 const totalYearlySavings = savingsPerYear + (activeDieselMaintenance - activeEvMaintenance);
                 
                 if (investmentDiff > 0 && totalYearlySavings > 0) {
@@ -163,8 +164,11 @@
                 });
             }, [inputs, mode]);
 
-            React.useEffect(() => {
-                lucide.createIcons();
+            // อัปเดตไอคอน Lucide เมื่อคอมโพเนนต์ถูกเรนเดอร์
+            useEffect(() => {
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
             });
 
             const handleInputChange = (e) => {
@@ -203,7 +207,7 @@
                             
                             <div className="inline-flex bg-gray-200 p-1 rounded-xl shadow-sm flex-wrap justify-center gap-1">
                                 <button
-                                    onClick={() => ReactSetMode('loader')}
+                                    onClick={() => setMode('loader')}
                                     className={`flex items-center px-4 py-3 rounded-lg text-sm sm:text-base font-medium transition-all ${
                                         mode === 'loader' ? 'bg-white text-blue-700 shadow-sm' : 'text-gray-600 hover:text-gray-900'
                                     }`}
@@ -212,7 +216,7 @@
                                     โหมดรถตัก (คิดตามชั่วโมง)
                                 </button>
                                 <button
-                                    onClick={() => ReactSetMode('tractor')}
+                                    onClick={() => setMode('tractor')}
                                     className={`flex items-center px-4 py-3 rounded-lg text-sm sm:text-base font-medium transition-all ${
                                         mode === 'tractor' ? 'bg-white text-blue-700 shadow-sm' : 'text-gray-600 hover:text-gray-900'
                                     }`}
@@ -221,7 +225,7 @@
                                     โหมดรถหัวลาก (คิดตามระยะทาง)
                                 </button>
                                 <button
-                                    onClick={() => ReactSetMode('mixer')}
+                                    onClick={() => setMode('mixer')}
                                     className={`flex items-center px-4 py-3 rounded-lg text-sm sm:text-base font-medium transition-all ${
                                         mode === 'mixer' ? 'bg-white text-blue-700 shadow-sm' : 'text-gray-600 hover:text-gray-900'
                                     }`}
@@ -234,7 +238,7 @@
 
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                             
-                            {}
+                            {/* --- Left Column: Inputs --- */}
                             <div className="lg:col-span-4 space-y-6">
                                 
                                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
@@ -282,7 +286,6 @@
                                     </div>
                                 </div>
 
-                                {}
                                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                                     <h2 className="text-lg font-semibold text-gray-800 mb-5 flex items-center">
                                         <i data-lucide="droplet" className="w-5 h-5 mr-2 text-orange-500"></i>
@@ -323,7 +326,6 @@
                                     </div>
                                 </div>
 
-                                {}
                                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                                     <h2 className="text-lg font-semibold text-gray-800 mb-5 flex items-center">
                                         <i data-lucide="zap" className="w-5 h-5 mr-2 text-green-500"></i>
@@ -366,7 +368,7 @@
 
                             </div>
 
-                            {}
+                            {/* --- Right Column: Results --- */}
                             <div className="lg:col-span-8 space-y-6">
                                 
                                 {/* Highlight Saving & ROI */}
@@ -467,7 +469,7 @@
                                     </div>
                                 </div>
 
-                                {}
+                                {/* แถบข้อมูลน่ารู้ */}
                                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                                     <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
                                         <i data-lucide="award" className="w-5 h-5 mr-2 text-yellow-500"></i>
