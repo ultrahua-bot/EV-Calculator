@@ -205,19 +205,19 @@
                             <div className="inline-flex bg-gray-200 p-1.5 rounded-2xl shadow-sm flex-wrap justify-center gap-1.5">
                                 <button onClick={() => ReactSetMode('tractor')} className={`flex items-center px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${mode === 'tractor' ? 'bg-white text-blue-700 shadow-sm ring-1 ring-black/5' : 'text-gray-600 hover:text-gray-900'}`}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M10 17h4V5H2v12h3"/><path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5"/><path d="M14 17h1"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
-                                    หัวลาก
+                                    รถหัวลาก
                                 </button>
                                 <button onClick={() => ReactSetMode('mixer')} className={`flex items-center px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${mode === 'mixer' ? 'bg-white text-blue-700 shadow-sm ring-1 ring-black/5' : 'text-gray-600 hover:text-gray-900'}`}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-                                    โม่ปูน
+                                    รถโม่ปูน
                                 </button>
                                 <button onClick={() => ReactSetMode('sixwheel')} className={`flex items-center px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${mode === 'sixwheel' ? 'bg-white text-blue-700 shadow-sm ring-1 ring-black/5' : 'text-gray-600 hover:text-gray-900'}`}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M8 19h8"/><path d="M8 5h8"/><path d="M4 15V9a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="7" cy="19" r="2"/><circle cx="17" cy="19" r="2"/></svg>
-                                    6 ล้อ
+                                    6 ล้อ (15 ตัน)
                                 </button>
                                 <button onClick={() => ReactSetMode('fourwheel')} className={`flex items-center px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${mode === 'fourwheel' ? 'bg-white text-blue-700 shadow-sm ring-1 ring-black/5' : 'text-gray-600 hover:text-gray-900'}`}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11h12zm0 0h2.5a2.5 2.5 0 0 0 2.5-2.5V11a2 2 0 0 0-2-2h-3v9z"/><circle cx="6" cy="18" r="2"/><circle cx="16" cy="18" r="2"/></svg>
-                                    4 ล้อ (กระบะ)
+                                    4 ล้อ (Jumbo)
                                 </button>
                                 <button onClick={() => ReactSetMode('loader')} className={`flex items-center px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${mode === 'loader' ? 'bg-white text-blue-700 shadow-sm ring-1 ring-black/5' : 'text-gray-600 hover:text-gray-900'}`}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="m10 11 11 .9c.6 0 .9.5.8 1.1l-.8 5h-1"/><path d="M16 18h-5"/><path d="M18 5a1 1 0 0 0-1 1v5.573"/><path d="M3 18h-.5"/><path d="M4 7l8-2.5"/><path d="M5 11l-.854.854A2 2 0 0 0 3.56 13.27L3.14 15.8a2 2 0 0 0 1.95 2.27H6"/><circle cx="18" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
